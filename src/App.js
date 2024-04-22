@@ -11,12 +11,10 @@ import {
   FaTwitter,
 } from "react-icons/fa";
 import Icon from "./Icon";
+import "./"
 
 function App() {
-  const supabase = createClient(
-    "https://vpqjhjifpqbucassuzkl.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwcWpoamlmcHFidWNhc3N1emtsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTM3NDY3MTgsImV4cCI6MjAyOTMyMjcxOH0.NXc3Z5vkACWNe6Uya-RlJGQlAtOEUyOnK1Ca7U0VP_M"
-  );
+  const supabase = createClient(process.env.REACT_APP_SUPABASE_PROJ_URL, process.env.REACT_APP_SUPABASE_PROJ_KEY);
   const [loading, setLoading] = useState(false);
   const [links, setLink] = useState([]);
 
@@ -24,16 +22,17 @@ function App() {
     async function getLinks() {
       setLoading(true);
       try {
-        const linksData = await supabase.from("links").select();
+        const linksData = await supabase.from('links').select()
         setLink(linksData.data);
+        setLoading(false);
       } catch (e) {
         console.log(e);
         setLoading(false);
-
       }
     }
-    getLinks();
-  }, []);
+  
+    getLinks()
+  }, [])
 
   return (
     <div className="App">
